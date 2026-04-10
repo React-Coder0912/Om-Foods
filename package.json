@@ -1,0 +1,35 @@
+{
+  "name": "namaste_react",
+  "version": "1.0.0",
+  "description": "This is Namaste React by Shivaraj Mothe",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShivaRajmothe/Namaste_React_Codings.git"
+  },
+  "author": "Shivaraj Mothe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShivaRajmothe/Namaste_React_Codings/issues"
+  },
+  "homepage": "https://github.com/ShivaRajmothe/Namaste_React_Codings#readme",
+  "dependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-icons": "^5.6.0",
+    "react-router-dom": "^6.30.3",
+    "tailwindcss": "^4.2.1",
+    "vite": "^6.4.1"
+  },
+  "broweserlist": [
+    "last 2 versions"
+  ],
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0"
+  }
+}
