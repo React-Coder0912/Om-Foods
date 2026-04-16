@@ -1,8 +1,8 @@
-
-
 import React from "react";
 import User from "./User";
 import UserClass from "./UserClass";
+
+import UserContext from "../utils/UserContext";
 
 
 
@@ -23,7 +23,13 @@ componentDidMount()
 
     // console.log(" Parent render called ")
     return (
-      <div>
+      <div className="justify-items-center">
+        <div >
+          Logged User :
+          <UserContext.Consumer>
+            {({loggedInUser}) => (<h1>{loggedInUser}</h1>)}
+          </UserContext.Consumer>
+        </div>
         <h1>About</h1>
         <h2>This is Namaste React Web Series</h2>
         {/* <User name={"Shivaraj Mothe Functional"}/> */}

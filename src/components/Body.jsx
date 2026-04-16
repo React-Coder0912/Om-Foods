@@ -2,22 +2,27 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import restaurants from "../utils/mockData";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { Link } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import useOnline from '../utils/useOnline';
 
-import ResturantCard from "./ResturantCard";
+import UserContext from "../utils/UserContext";
+import ResturantCard, {withPromotedLabel} from "./ResturantCard";
 
 const Body = () => {
   const [searchInput, setSearchInput] = useState("");
   const [filterResults, setFilterResults] = useState([]);
   const [listOfResturants, setListOfResturants] = useState([]);
 
+  const ResturantWithPromoted = withPromotedLabel(ResturantCard);
+
   useEffect(() => {
     fetchData();
   }, []);
 
+
+  console.log("list of resturants", listOfResturants)
   const fetchData = async () => {
     const data = await fetch("https://dummyjson.com/recipes");
     const json = await data.json();
@@ -28,6 +33,9 @@ const Body = () => {
 
 
 const onlineStatus = useOnline();
+
+const {loggedInUser ,setUserName} = useContext(UserContext);
+
 
 if(onlineStatus === false)
 return(
@@ -76,13 +84,24 @@ return(
           Top Rated Resturant
         </button>
         </div>
+
+        {/* <div className="m-4 p-4 flex items-center" >
+          <label>UserName: </label>
+        <input className="border border-black" 
+        value={loggedInUser}
+         onChange={(e) => setUserName(e.target.value)}
+        />
+        </div> */}
        
       </div>
       <div className="flex flex-wrap">
         {filterResults.map((res) => {
           return <Link  className="recipes_links"to={"/recipes/" + res.id} 
           key={res.id}>
-          <ResturantCard  {...res} /></Link>;
+            {
+              res.difficulty === 'Easy' ? <ResturantWithPromoted {...res}/> :<ResturantCard  {...res} />
+            }
+          </Link>;
         })}
       </div>
     </div>
