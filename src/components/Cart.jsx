@@ -1,10 +1,18 @@
 import { useSelector } from "react-redux";
 import MenuDetails from "./MenuDetails";
 import ProductDetails from "./ProductDetails";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../utils/cartSlice";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
 
+const dispatch = useDispatch();
+const handleClearCart =() =>
+{
+  dispatch(clearCart());
+}
+  
   if (cartItems.length === 0) {
     return (
       <div className="min-h-[200px] flex items-center justify-center text-gray-500">
@@ -14,10 +22,12 @@ const Cart = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Cart</h1>
+    <div className="max-w-4xl mx-auto p-4 text-center">
+      <h1 className="text-2x  font-bold mb-4">Cart</h1>
 
       <div className="flex flex-col gap-4">
+        <button className="self-end px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition" onClick={handleClearCart}>
+          Clear Cart </button>
         {cartItems.map((item) => {
           // If item looks like a restaurant (has `name`), render MenuDetails
           if (item.name) {

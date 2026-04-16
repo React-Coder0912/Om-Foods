@@ -37,7 +37,7 @@ const ProductMenu = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <Link to="/instamart" className="text-blue-600 underline">&larr; Back to products</Link>
+      <Link to="/instamart" className="text-blue-600">&larr; Back to products</Link>
 
       <ProductDetails product={product} />
     </div>

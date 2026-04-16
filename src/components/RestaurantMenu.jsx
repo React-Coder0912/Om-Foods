@@ -186,7 +186,7 @@ const RestaurantMenu = () => {
         <li className="font-bold">{loggedInUser}</li>
       </ul>
 
-      <Link to="/" className="text-blue-600 underline">
+      <Link to="/" className="text-blue-600">
         &larr; Back to Home
       </Link>
 
