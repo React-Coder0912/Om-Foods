@@ -51,7 +51,6 @@ const ResturantCard =(resData) =>{
   </span>
 </h4>
   <h4 className="font-bold">{cookTimeMinutes} minutes</h4>
-  <h4> User: {loggedInUser}</h4>
         </div>
     )
 };
