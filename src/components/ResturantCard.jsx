@@ -35,6 +35,7 @@ const renderStars = (rating) => {
 
 const ResturantCard =(resData) =>{
     const { name, cuisine, rating, cookTimeMinutes, image } = resData;
+    // console.log(resData);
     const {loggedInUser} = useContext(UserContext);
     return(
 

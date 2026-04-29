@@ -18,7 +18,6 @@ Namaste React
 - Code Splitting
 - Consistent Hashing 
 
-Namaste React
 
 #Parcel
 - Dev Build
@@ -53,3 +52,16 @@ parent mount
 
 https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
 
+#Types of Testing
+
+Unit Testing - test react component in isolation 
+Integration Testing - verify  testing components interaction 
+E2E Testing  - testing entire application 
+
+
+
+install react testing
+install jest
+ install babel
+ now configure babel - on the root level create new file babel.configure - past the code here
+ 

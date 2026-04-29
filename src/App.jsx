@@ -27,22 +27,22 @@ setUserName(data.name);
   },[])
   return (
     <Provider store={appStore}>
-    {/* <UserContext.Provider 
+    <UserContext.Provider 
     value={{
             loggedInUser: userName,
             setUserName,
           }}
-    > */}
+    >
     <div className="app">
-    {/* <UserContext.Provider  value={{loggedInUser : "Raj"}}> */}
+    <UserContext.Provider  value={{loggedInUser : "Raj"}}>
       <Header />
-      {/* </UserContext.Provider> */}
+      </UserContext.Provider>
 
       <Outlet />
       {/* <SearchFilter/>
       <Accordian /> */}
     </div>
-    {/* </UserContext.Provider> */}
+    </UserContext.Provider>
     </Provider>
   );
 };
