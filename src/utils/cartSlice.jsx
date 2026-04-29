@@ -6,7 +6,7 @@ const cartSlice = createSlice({
     items: [],
   },
   reducers: {
-    // Add item or increase qty
+    // ✅ Add item or increase qty
     addItem: (state, action) => {
       const item = action.payload;
       const existingItem = state.items.find(i => i.id === item.id);
@@ -20,27 +20,31 @@ const cartSlice = createSlice({
 
     // ✅ Increase quantity
     increaseQty: (state, action) => {
-      const itemId = action.payload;
-      const item = state.items.find(i => i.id === itemId);
-      if (item) {
-        item.qty += 1;
-      }
+      const item = state.items.find(i => i.id === action.payload);
+      if (item) item.qty += 1;
     },
 
-    // ✅ Decrease quantity or remove
+    // ✅ Decrease quantity or remove item
     decreaseQty: (state, action) => {
-      const itemId = action.payload;
-      const itemIndex = state.items.findIndex(i => i.id === itemId);
-
-      if (itemIndex !== -1) {
-        if (state.items[itemIndex].qty > 1) {
-          state.items[itemIndex].qty -= 1;
+      const index = state.items.findIndex(i => i.id === action.payload);
+      if (index !== -1) {
+        if (state.items[index].qty > 1) {
+          state.items[index].qty -= 1;
         } else {
-          state.items.splice(itemIndex, 1);
+          state.items.splice(index, 1);
         }
       }
     },
 
+    // ✅ Remove selected items (NEW)
+    removeSelectedItems: (state, action) => {
+      const selectedIds = action.payload; // array of ids
+      state.items = state.items.filter(
+        item => !selectedIds.includes(item.id)
+      );
+    },
+
+    // ✅ Clear entire cart
     clearCart: (state) => {
       state.items = [];
     },
@@ -51,6 +55,7 @@ export const {
   addItem,
   increaseQty,
   decreaseQty,
+  removeSelectedItems, // ✅ export
   clearCart,
 } = cartSlice.actions;
 

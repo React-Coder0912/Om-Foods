@@ -1,18 +1,32 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 import MenuDetails from "./MenuDetails";
 import ProductDetails from "./ProductDetails";
-import { useDispatch } from "react-redux";
-import { clearCart } from "../utils/cartSlice";
+import { clearCart, removeSelectedItems } from "../utils/cartSlice";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
+  const dispatch = useDispatch();
+  const [selectedItems, setSelectedItems] = useState([]);
 
-const dispatch = useDispatch();
-const handleClearCart =() =>
-{
-  dispatch(clearCart());
-}
-  
+  const handleClearCart = () => {
+    dispatch(clearCart()); // ✅ FIXED
+    setSelectedItems([]);
+  };
+
+  const handleClearSelected = () => {
+    dispatch(removeSelectedItems(selectedItems));
+    setSelectedItems([]);
+  };
+
+  const handleCheckboxChange = (id) => {
+    setSelectedItems((prev) =>
+      prev.includes(id)
+        ? prev.filter((itemId) => itemId !== id)
+        : [...prev, id]
+    );
+  };
+
   if (cartItems.length === 0) {
     return (
       <div className="min-h-[200px] flex items-center justify-center text-gray-500">
@@ -22,50 +36,50 @@ const handleClearCart =() =>
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 text-center">
-      <h1 className="text-2x  font-bold mb-4">Cart</h1>
+    <div className="max-w-4xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">Cart</h1>
 
+      {/* ✅ ACTION BUTTONS */}
+      <div className="flex justify-end gap-3 mb-4">
+        <button
+          onClick={handleClearSelected}
+          disabled={selectedItems.length === 0}
+          className="px-4 py-2 bg-red-500 text-white rounded disabled:opacity-50"
+        >
+          Clear Selected
+        </button>
+
+        <button
+          onClick={handleClearCart}
+          className="px-4 py-2 bg-green-500 text-white rounded"
+        >
+          Clear Cart
+        </button>
+      </div>
+
+      {/* ✅ CART ITEMS */}
       <div className="flex flex-col gap-4">
-        <button className="self-end px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition" onClick={handleClearCart}>
-          Clear Cart </button>
-        {cartItems.map((item) => {
-          // If item looks like a restaurant (has `name`), render MenuDetails
-          if (item.name) {
-            return (
-              <MenuDetails
-              key={item.id}
-              name={item.name}
-              image={item.image}
-              rating={item.rating || 0}
-              ingredients={item.ingredients || []}
-              cuisine={item.cuisine}
-              cartItem={item}
+        {cartItems.map((item) => (
+          <div
+            key={item.id}
+            className="flex items-start gap-4 p-4 border rounded bg-white shadow-sm"
+          >
+            <input
+              type="checkbox"
+              checked={selectedItems.includes(item.id)}
+              onChange={() => handleCheckboxChange(item.id)}
+              className=" w-[20px] mt-2"
             />
-            );
-          }
 
-          // If item looks like a product (has `title`), render ProductDetails
-          if (item.title) {
-            return <ProductDetails key={item.id} product={item} />;
-          }
-
-          // Fallback: simple display
-          return (
-            <div key={item.id} className="p-4 border rounded bg-white shadow-sm flex items-center gap-4">
-              <div className="w-20 h-20 bg-gray-100 rounded overflow-hidden flex items-center justify-center">
-                {item.image ? (
-                  <img src={item.image} alt={item.title || item.name} className="w-full h-full object-cover" />
-                ) : (
-                  <span className="text-sm text-gray-400">No image</span>
-                )}
-              </div>
-              <div>
-                <div className="font-medium text-gray-800">{item.name || item.title || "Item"}</div>
-                <div className="text-sm text-gray-600">{item.description || item.cuisines?.join(", ")}</div>
-              </div>
+            <div className="flex-1">
+              {item.name ? (
+                <MenuDetails {...item} cartItem={item} />
+              ) : (
+                <ProductDetails product={item} />
+              )}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );
